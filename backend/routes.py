@@ -10,7 +10,7 @@ def init_routes(app):
 
     @app.route('/test', methods=['GET'])
     def get_test():
-        return jsonify(TEST_QUESTIONS)
+        return jsonify(TEST_QUESTIONS), 200
 
     @app.route('/submit', methods=['POST'])
     def submit_test():
