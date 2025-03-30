@@ -27,3 +27,15 @@ def init_routes(app):
     @app.route('/register', methods=['POST'])
     def register_route():
         return register()
+
+    @app.route('/recommendations', methods=['POST'])
+    def generate_recommendations():
+    data = request.json
+    student_id = data['student_id']
+    student = Student.query.get(student_id)
+    competence_level = student.competence_level
+    
+    # Сопоставьте уровень компетенций с учебными материалами
+    materials = Material.query.filter_by(competence_level=competence_level).all()
+    
+    return jsonify([{"title": m.title, "description": m.description} for m in materials])
