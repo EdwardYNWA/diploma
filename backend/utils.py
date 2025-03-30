@@ -5,4 +5,3 @@ def classify_student(score):
         return "Средний"
     else:
         return "Начинающий"
-
