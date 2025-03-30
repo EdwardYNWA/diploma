@@ -4,11 +4,14 @@ from flask_cors import CORS
 from routes import init_routes
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})  # Разрешаем CORS, если требуется
+CORS(app, resources={r"/*": {"origins": "*"}})  # Разрешаем CORS для всех маршрутов
 
-# Конфигурация подключения к базе данных (замени username и password на свои данные)
+# Конфигурация базы данных
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://username:password@localhost/diploma_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Отключение CSRF-защиты (если необходимо)
+app.config['WTF_CSRF_ENABLED'] = False
 
 # Инициализация базы данных
 from models import db  # Импортируем объект db из models.py
