@@ -1,11 +1,10 @@
 from flask import Flask
-from routes import init_routes
 
 app = Flask(__name__)
 
-# Подключаем маршруты (endpoints)
-init_routes(app)
+@app.route('/')
+def home():
+    return "Приложение работает!"
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)
-
