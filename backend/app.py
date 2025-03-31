@@ -1,20 +1,19 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from routes import init_routes
+from models import db
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})  # Разрешаем CORS для всех маршрутов
-
-# Конфигурация базы данных
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://username:password@localhost/diploma_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['JWT_SECRET_KEY'] = 'super-secret'  # Замените на случайный ключ
 
-# Отключение CSRF-защиты (если необходимо)
-app.config['WTF_CSRF_ENABLED'] = False
+CORS(app, resources={r"/*": {"origins": "*"}})
+jwt = JWTManager(app)
 
 # Инициализация базы данных
-from models import db  # Импортируем объект db из models.py
 db.init_app(app)
 
 # Регистрация маршрутов
